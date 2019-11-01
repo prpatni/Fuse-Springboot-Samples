@@ -1,0 +1,48 @@
+ENERGY_SOURCE,FUEL_CATEGORY,FUEL_CATEGORY_ROLLUP
+BIT,Coal,Coal
+LIG,Coal,Coal
+SC,Coal,Coal
+SUB,Coal,Coal
+WC,Coal,Coal
+WAT,Hydro,Hydro
+BFG,Natural Gas,Natural Gas
+LPG,Natural Gas,Natural Gas
+NG,Natural Gas,Natural Gas
+PG,Natural Gas,Natural Gas
+NUC,Nuclear,Nuclear
+BKRC,Oil,Oil
+DFO,Oil,Oil
+FO1,Oil,Oil
+FO2,Oil,Oil
+FO3,Oil,Oil
+FO4,Oil,Oil
+FO5,Oil,Oil
+FO6,Oil,Oil
+GA,Oil,Oil
+GAC,Oil,Oil
+GAE,Oil,Oil
+GAO,Oil,Oil
+GAR,Oil,Oil
+JF,Oil,Oil
+KER,Oil,Oil
+MUL,Oil,Oil
+PC,Oil,Oil
+RFO,Oil,Oil
+WO,Oil,Oil
+DRR,Other,Other
+MWH,Other,Other
+LFG,Landfill Gas,Renewables
+OBG,Methane,Renewables
+AB,Refuse,Renewables
+MSW,Refuse,Renewables
+OBL,Refuse,Renewables
+OBS,Refuse,Renewables
+OTR,Refuse,Renewables
+SLW,Refuse,Renewables
+TDF,Refuse,Renewables
+SUN,Solar,Renewables
+PUR,Steam,Renewables
+WND,Wind,Renewables
+BLQ,Wood,Renewables
+WDL,Wood,Renewables
+WDS,Wood,Renewables

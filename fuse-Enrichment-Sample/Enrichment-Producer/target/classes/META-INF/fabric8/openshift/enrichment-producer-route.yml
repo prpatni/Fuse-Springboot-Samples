@@ -1,0 +1,17 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    expose: "true"
+    app: Enrichment-Producer
+    provider: fabric8
+    version: "1.0"
+    group: org.mycompany
+  name: enrichment-producer
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: enrichment-producer

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Adding JMSConnectionFactory Bean-->
+    <bean
+        class="org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory" id="artemisConnectionFactory">
+        <constructor-arg index="0" value="${activemq.jms.uri}"/>
+    </bean>
+    <!-- Adding JMSComponent Bean-->
+    <bean class="org.apache.camel.component.jms.JmsComponent" id="jms">
+        <property name="connectionFactory" ref="artemisConnectionFactory"/>
+    </bean>
+    <!-- Start: Camel route starting -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="Enrichment-Consumer">
+            <!--  Uncomment this to run on windows machine
+            	<to id="_to1" uri="file:/home/ec2-user/EnrichmentMessage/outbox"/>
+            -->
+            <from id="_to2" uri="jms:topic:RH.POC.SOURCE.ENRICHMENT.REQ?clientId=Target1&amp;subscriptionDurable=true&amp;subscriptionName=Target1"/>
+            <log id="route-log0" message="Step 1 - Received message from topic"/>
+            <log id="route-log1" message="Step 2 - calling pollEnrich to fetch file and using AggregationStrategy bean to enrich the message"/>
+            <pollEnrich id="_pollEnrich1" strategyRef="aggregationStrategy">
+                <!--  Uncomment this to run on windows machine
+                <constant>file:/home/ec2-user/EnrichmentMessage/enrich?noop=ture</constant>
+            -->
+                <constant>file:enrichInbox?noop=ture</constant>
+            </pollEnrich>
+            <log id="route-log2" message="Step 3 - Received message from AggregationStrategy bean"/>
+            <log id="route-log3" message="Step 4 - Sending messages to outbox folder"/>
+            <to id="_to1" uri="file:outbox"/>
+            <log id="route-log4" message="Step 5 - Messages Sent"/>
+            <log id="route-log5" message="********* Enrichment-Consumer Camel Route Completed **************"/>
+        </route>
+    </camelContext>
+    <!-- End: Camel route starting -->
+    <!-- Injecting EnrichmentAggregation Bean -->
+    <bean class="org.mycompany.EnrichmentAggregationStratery" id="aggregationStrategy"/>
+</beans>

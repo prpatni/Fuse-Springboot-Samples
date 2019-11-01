@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Adding JMSConnectionFactory Bean-->
+    <bean
+        class="org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory" id="artemisConnectionFactory">
+        <!-- <constructor-arg index="0" value="tcp://10.0.20.13:61616"/>  -->
+        <constructor-arg index="0" value="${activemq.jms.uri}"/>
+    </bean>
+    <!-- Adding JMSComponent Bean-->
+    <bean class="org.apache.camel.component.jms.JmsComponent" id="jms">
+        <property name="connectionFactory" ref="artemisConnectionFactory"/>
+    </bean>
+    <!-- Start: Camel route starting -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="Enrichment-Producer">
+            <!-- Path to Test on windows and linux 
+            	<from id="_to2" uri="file:/home/ec2-user/EnrichmentMessage/inbox"/>
+            -->
+            <from id="_to2" uri="file:inbox"/>
+            <log id="route-log0" message="Step 1 - Picked message from Fodler"/>
+            <log id="route-log1" message="Step 2 - Sending message to JAXB bean for Marshalling"/>
+            <process id="_process1" ref="JAXBBean"/>
+            <log id="route-log2" message="Step 3 - Receive message from JAXB bean after Marshalling"/>
+            <log id="route-log3" message="Step 4 - Sending messages to Topic"/>
+            <to id="_to1" uri="jms:topic:RH.POC.SOURCE.ENRICHMENT.REQ"/>
+            <log id="route-log4" message="Step 5 - Messages Sent"/>
+            <log id="route-log5" message="********* Enrichment - Produce Camel Route Completed **************"/>
+        </route>
+    </camelContext>
+    <!-- End: Camel route starting -->
+    <!-- Injecting JAXB Bean -->
+    <bean class="org.mycompany.ParseXMLtoObject" id="JAXBBean"/>
+</beans>
