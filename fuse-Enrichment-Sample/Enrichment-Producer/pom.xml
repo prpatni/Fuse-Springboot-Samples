@@ -96,14 +96,7 @@
                                            <groupId>org.apache.camel</groupId>
                                            <artifactId>camel-jaxb</artifactId>
                                            <version>2.13.0</version>
-                             </dependency>
-    
-   <dependency>
-                  <groupId>com.isone.cim</groupId>
-                  <artifactId>iso-cim</artifactId>
-                  <version>CIM_MARSEILLE_20180920</version>
-            </dependency>
-    
+                             </dependency>  
   <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>
