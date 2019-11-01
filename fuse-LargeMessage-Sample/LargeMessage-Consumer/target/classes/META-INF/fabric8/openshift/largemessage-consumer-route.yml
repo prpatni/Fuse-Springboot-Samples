@@ -1,0 +1,17 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    expose: "true"
+    app: LargeMessage-Consumer
+    provider: fabric8
+    version: "1.0"
+    group: org.mycompany
+  name: largemessage-consumer
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: largemessage-consumer
